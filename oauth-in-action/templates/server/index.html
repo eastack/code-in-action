@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>OAuth in Action: OAuth Server</title>
+</head>
+<body>
+<nav>
+    <a href="/">Oauth in Action: <span>OAuth Server</span></a>
+</nav>
+<div>
+    <h2>Client Info:</h2>
+    {{ range $client := .oauthClients}}
+    <ul>
+        <li><b>client_id:</b> <code>{{$client.ClientId}}</code></li>
+        <li><b>client_secret:</b> <code>{{$client.ClientSecret}}</code></li>
+        <li><b>scope:</b> <code>{{$client.Scope}}</code></li>
+        <li><b>redirect_uri:</b> <code>{{$client.RedirectUris}}</code></li>
+    </ul>
+    {{ end }}
+
+    <h2>Server Info:</h2>
+    <ul>
+        <li><b>authorization_endpoint:</b> <code>{{if .oauthServer.AuthorizationEndpoint}}{{.oauthServer.AuthorizationEndpoint}}{{else}}NONE{{end}}</code></li>
+        <li><b>token_endpoint:</b> <code>{{.oauthServer.TokenEndpoint}}</code></li>
+    </ul>
+</div>
+</body>
+</html>

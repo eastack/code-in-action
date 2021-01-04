@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>OAuth in Action: OAuth Server</title>
+</head>
+<body>
+<nav>
+    <a href="/">Oauth in Action: <span>OAuth Server</span></a>
+</nav>
+<div>
+    <h2>Approve this client?</h2>
+    {{ if .client.ClientName }}
+    <p><b>Name:</b> <code>{{ .client.ClientName }}</code></p>
+    {{end}}
+    <p><b>ID:</b> <code>{{ .client.ClientId }}</code></p>
+    {{ if .client.ClientUri }}
+    <p><b>URI:</b> <code>{{ .client.ClientUri }}</code></p>
+    {{ end }}
+    {{ if .client.LogoUri }}
+    <p><b>logo:</b> <img src="{{ .client.LogoUri }}"/></p>
+    {{ end }}
+
+    <form class="form" action="/approve" method="POST">
+        <input type="hidden" name="requestId" value="{{ .requestId }}">
+        {{ if .scopes }}
+        <p>The client is requesting access to the following:</p>
+        <ul>
+            {{ range $scope := .scopes }}
+            <li><input type="checkbox" name="scope_{{ $scope }}" id="scope_{{ $scope }}" checked="checked"> <label
+                    for="scope_{{ $scope }}">{{ $scope }}</label></li>
+            {{ end }}
+        </ul>
+        {{ end }}
+        <input type="submit" class="btn btn-success" name="approve" value="approve">
+        <input type="submit" class="btn btn-danger" name="deny" value="deny">
+    </form>
+</div>
+</body>
+</html>

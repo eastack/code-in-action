@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width">
+		<title>OAuth in Action: OAuth Client</title>
+	</head>
+	<body>
+		<nav>
+			<a href="/">Oauth in Action: <span>OAuth Client</span></a>
+		</nav>
+		<div>
+
+			<p>Access token value: <span>{{if .access_token}} {{ .access_token }} {{ else }} NONE {{ end }}</span></p>
+			<p>Scope value: <span>{{if .scope}} {{ .scope }} {{ else }} NONE {{ end }}</span></p>
+			<a href="/authorize">Get OAuth Token</a>
+			<a href="/fetch_resource">Get Protected Resource</a>
+		</div>
+	</body>
+</html>
