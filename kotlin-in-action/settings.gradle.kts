@@ -1,1 +1,1 @@
-rootProject.name = "me.eastack"
+rootProject.name = "kotlin-in-action"
