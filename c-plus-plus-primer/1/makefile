@@ -1,0 +1,1 @@
+CCFLAGS = -W -Wall -I..
