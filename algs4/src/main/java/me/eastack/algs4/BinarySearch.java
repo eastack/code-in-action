@@ -1,4 +1,4 @@
-package me.ipool.algs4;
+package me.eastack.algs4;
 
 import java.util.Arrays;
 import edu.princeton.cs.algs4.In;
