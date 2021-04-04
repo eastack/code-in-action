@@ -16,7 +16,7 @@ public class SortCompare {
     }
 
     public static Double[] randomArray() {
-        return randomArray(100);
+        return randomArray(1000000);
     }
 
     public static Double[] randomArray(int len) {

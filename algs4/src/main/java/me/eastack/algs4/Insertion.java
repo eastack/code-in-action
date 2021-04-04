@@ -26,9 +26,9 @@ public class Insertion implements Sorter {
             int j = i;
             Comparable temp = a[j];
 
-            while (j > 0 && less(temp, a[j - 1])) {
+            while (j >= 1 && less(temp, a[j - 1])) {
                 a[j] = a[j - 1];
-                j--;
+                j = j -1;
             }
 
             a[j] = temp;
