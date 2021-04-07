@@ -1,1 +1,2 @@
 https://github.com/denji/golang-tls[golang-tls]
+https://wiki.archlinux.org/index.php/User:Grawity/Adding_a_trusted_CA_certificate[Adding a trusted CA certificate]
