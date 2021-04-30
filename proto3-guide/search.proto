@@ -1,0 +1,49 @@
+syntax = "proto3"
+
+/* SearchRequest represents a search query, with pagination options to
+ * indicate which results to include in the response. */
+message SearchRequest {
+	reserved 5, 6, 7 to 11;
+	reserved "page_size", "page";
+
+	string query = 1;
+	int32 page_number = 2; // Which page number do we want?
+	int32 result_per_page = 3; // Number of results to return per page.
+	// 语料库
+	enum Corpus {
+		option allow_alias = true;
+		UNIVERSAL = 0; // 必须有一个零值，我们用来做默认值，零值必须是第一个元素，我们为了兼容proto2
+		WEB = 1;	
+		SAP = 1;	
+		IMAGES = 2;	
+		LOCAL = 3;	
+		NEWS = 4;	
+		PRODUCTS = 5;	
+		VIDEO = 6;	
+	}
+	Corpus corpus = 4;
+}
+
+// 搜索响应
+message SearchResponse {
+	// 语料库
+	enum Corpus {
+		reserved 11, 12, 13 to 17 
+		reserved "PICTURE", "PC";
+		UNIVERSAL = 0; // 必须有一个零值，我们用来做默认值，零值必须是第一个元素，我们为了兼容proto2
+		WEB = 1;	
+		SAP = 1; // 没有option allow_alias = true;编译报错
+		IMAGES = 2;	
+		LOCAL = 3;	
+		NEWS = 4;	
+		PRODUCTS = 5;	
+		VIDEO = 6;	
+	}
+	repeated Result results = 1;
+}
+
+message Result {
+	string url = 1;
+	string title = 2;
+	repeated string snippets = 3;
+}
