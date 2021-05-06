@@ -1,4 +1,4 @@
-package me.eastack.algs4;
+package me.eastack.algs4.ch02.code;
 
 @SuppressWarnings("rawtypes")
 public class Shell implements Sorter {

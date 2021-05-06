@@ -1,9 +1,6 @@
-package me.eastack.algs4;
+package me.eastack.algs4.ch02.code;
 
 import edu.princeton.cs.algs4.StdOut;
-import edu.princeton.cs.algs4.StdRandom;
-
-import java.util.Arrays;
 
 @SuppressWarnings("rawtypes, unchecked")
 public interface Sorter {
