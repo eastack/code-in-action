@@ -19,12 +19,12 @@ public class Generic {
         // ArrayList<Float> 是 List<? extends Number> 的子类
         arr = new ArrayList<Float>();
 
-        // set 报错，因为此时 arr0 有可能是
+        // set 报错，因为此时 arr 有可能是
+        // ArrayList<Integer>
+        // ArrayList<Double>
         // ArrayList<Float>
-        // ArrayList<Float>
-        // ArrayList<Float>
-        // 三个子类型中的任意一个
-        //arr0.set(0, Integer.valueOf(1));
+        // 三个子类型中的任意一个，如果此时arr为ArrayList<Double>，而设置值为Integer
+        //arr.set(0, Integer.valueOf(1));
 
         // get 获取到的值是 Number 类型，原因同上，取出类型为 Number 是安全的
         Number number = arr.get(0);
