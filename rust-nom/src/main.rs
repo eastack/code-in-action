@@ -1,50 +1,29 @@
-extern crate nom;
+mod commands;
+mod reply;
 
-use nom::{
-    IResult,
-    bytes::complete::{tag, take_while_m_n},
-    combinator::map_res,
-    sequence::tuple};
+use std::error::Error;
+use clap::Clap;
+use bytes::{BytesMut, BufMut};
+use tokio::net::TcpStream;
+use tokio::io::{AsyncWriteExt, AsyncReadExt};
 
-#[derive(Debug,PartialEq)]
-pub struct Color {
-    pub red:     u8,
-    pub green:   u8,
-    pub blue:    u8,
-}
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn Error>> {
+    let command = commands::Commands::parse();
 
-fn from_hex(input: &str) -> Result<u8, std::num::ParseIntError> {
-    u8::from_str_radix(input, 16)
-}
+    let mut stream = TcpStream::connect("127.0.0.1:6379").await?;
+    let mut buf = [0u8; 1024];
+    let mut resp = BytesMut::with_capacity(1024);
 
-fn is_hex_digit(c: char) -> bool {
-    c.is_digit(16)
-}
+    let (mut reader, mut writer) = stream.split();
 
-fn hex_primary(input: &str) -> IResult<&str, u8> {
-    map_res(
-        take_while_m_n(2, 2, is_hex_digit),
-        from_hex
-    )(input)
-}
+    writer.write(&command.to_bytes()).await?;
+    let n = reader.read(&mut buf).await?;
+    resp.put(&buf[0..n]);
 
-fn hex_color(input: &str) -> IResult<&str, Color> {
-    let (input, _) = tag("#")(input)?;
-    let (input, (red, green, blue)) = tuple((hex_primary, hex_primary, hex_primary))(input)?;
 
-    Ok((input, Color { red, green, blue }))
-}
+    let rep = reply::Reply::from_resp(&resp);
+    println!("{}", rep);
 
-fn main() {
-    // assert_eq!(hex_color("#2F14DF"), Ok(("", Color {
-    //     red: 47,
-    //     green: 20,
-    //     blue: 223,
-    // })));
-    fn parse(input: &str) -> IResult<&str, &str> {
-        tag("#")(input)
-    }
-
-    let (remain, pattern) = parse("#ffffff").unwrap();
-    println!("{}, {}", remain, pattern);
+    Ok(())
 }
